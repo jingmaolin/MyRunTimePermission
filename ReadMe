@@ -1,0 +1,26 @@
+运行时权限处理：
+    对于一些危险权限，在6.0以下的系统中，只要在AndroidManifest中注册了则可以正常运行； 但针对Android6.0以上的版本，只在AndroidManifest中注册仍会崩溃，
+    其还需要在运行时进行权限处理。
+
+    重点：
+    ①检查某一项权限是否授权
+        ContextCompat.checkSelfPermission()
+
+    ②请求未授权的权限(可同时请求多个权限）（每一子项都不能为空！！！，否则不会弹出系统框)
+        ActivityCompat.requestPermissions()
+
+    ③ActivityCompat.shouldShowRequestPermissionRationale
+        返回值 true： 第一次拒绝（未勾选不再提示）且后续再次判断时
+        返回值 false：第一次判断；勾选不在提示框并拒绝后，再次判断
+
+    ④生命周期流转（注：请求不一定要放在onClick中）
+        onCrete->onStart->onResume->onclick->onPause->onResume
+
+    ⑤待理解：
+    AppOpsManagerCompat
+    AppOpsManager
+
+    ⑥华为手机位置信息关闭后的定位处理
+
+    备注：查看手机危险权限命令行
+    adb shell pm list permissions -d -g
